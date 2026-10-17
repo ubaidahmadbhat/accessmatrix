@@ -1,0 +1,498 @@
+.bola-panel {
+  display: grid;
+  gap: 18px;
+  padding: 25px;
+  border: 1px solid #1c3449;
+  border-radius: 17px;
+  background: #0a1928;
+}
+
+.bola-header,
+.bola-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.bola-header h3 {
+  margin: 7px 0 6px;
+  font-size: 21px;
+}
+
+.bola-header p,
+.bola-section-heading p,
+.bola-details-header p {
+  max-width: 760px;
+  margin: 0;
+  color: #788da4;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.bola-section-label {
+  color: #64c9f1;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bola-button {
+  min-height: 41px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.bola-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.bola-button-primary {
+  border: 1px solid #5bc7f1;
+  color: #06131f;
+  background: #62caf2;
+}
+
+.bola-button-secondary {
+  border: 1px solid #35546d;
+  color: #c4d5e5;
+  background: #10283c;
+}
+
+.bola-spinner {
+  animation:
+    bola-spin
+    850ms
+    linear
+    infinite;
+}
+
+@keyframes bola-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bola-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #74404a;
+  border-radius: 11px;
+  color: #ff909d;
+  background: #351d24;
+}
+
+.bola-alert strong,
+.bola-alert span {
+  display: block;
+}
+
+.bola-alert span {
+  margin-top: 4px;
+  color: #9aacbd;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.bola-run-section,
+.bola-history-section,
+.bola-scan-details,
+.bola-findings-section,
+.bola-results-section {
+  display: grid;
+  gap: 15px;
+  padding: 19px;
+  border: 1px solid #1d384d;
+  border-radius: 13px;
+  background: #091825;
+}
+
+.bola-section-heading h4,
+.bola-details-header h4,
+.bola-section-heading h5 {
+  margin: 6px 0 0;
+  font-size: 16px;
+}
+
+.bola-section-heading p {
+  margin-top: 6px;
+  font-size: 10px;
+}
+
+.bola-acknowledgement {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid #735c2f;
+  border-radius: 10px;
+  background: #332a17;
+}
+
+.bola-acknowledgement input {
+  width: 17px;
+  height: 17px;
+  margin-top: 1px;
+}
+
+.bola-acknowledgement strong,
+.bola-acknowledgement small {
+  display: block;
+}
+
+.bola-acknowledgement strong {
+  color: #e2d6bd;
+  font-size: 11px;
+}
+
+.bola-acknowledgement small {
+  margin-top: 4px;
+  color: #9d927b;
+  font-size: 10px;
+}
+
+.bola-confirmation-field,
+.bola-history-select {
+  display: grid;
+  gap: 8px;
+}
+
+.bola-confirmation-field > span,
+.bola-history-select > span {
+  color: #c7d5e4;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.bola-confirmation-field code {
+  padding: 10px 12px;
+  border: 1px solid #4f3f25;
+  border-radius: 8px;
+  color: #e3bc73;
+  background: #2e2718;
+}
+
+.bola-confirmation-field input,
+.bola-history-select select {
+  min-height: 43px;
+  padding: 0 12px;
+  border: 1px solid #2a455b;
+  border-radius: 10px;
+  outline: none;
+  color: #e5edf6;
+  background: #081725;
+}
+
+.bola-confirmation-field input:focus,
+.bola-history-select select:focus {
+  border-color: #4ca8d0;
+  box-shadow:
+    0 0 0 3px
+    rgba(76, 168, 208, 0.12);
+}
+
+.bola-loading,
+.bola-empty,
+.bola-no-findings {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  border: 1px dashed #29465c;
+  border-radius: 12px;
+  text-align: center;
+  color: #6e879d;
+  background: #081725;
+}
+
+.bola-empty h5,
+.bola-empty p,
+.bola-no-findings h5,
+.bola-no-findings p {
+  margin: 0;
+}
+
+.bola-empty p,
+.bola-no-findings p {
+  font-size: 10px;
+}
+
+.bola-scan-status,
+.bola-result-status,
+.bola-severity,
+.bola-confidence {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 8px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.bola-scan-status-completed,
+.bola-result-status-pass {
+  border: 1px solid #275e46;
+  color: #72d8a5;
+  background: #102d22;
+}
+
+.bola-scan-status-partial,
+.bola-result-status-inconclusive {
+  border: 1px solid #735c2f;
+  color: #e4bd72;
+  background: #332a17;
+}
+
+.bola-scan-status-failed,
+.bola-result-status-finding,
+.bola-result-status-blocked {
+  border: 1px solid #74404a;
+  color: #ff909d;
+  background: #351d24;
+}
+
+.bola-stat-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+  gap: 12px;
+}
+
+.bola-stat-grid article {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px 15px;
+  border: 1px solid #1e3b51;
+  border-radius: 10px;
+  color: #67caef;
+  background: #0b1c2b;
+}
+
+.bola-stat-grid span,
+.bola-stat-grid strong {
+  display: block;
+}
+
+.bola-stat-grid span {
+  color: #70869d;
+  font-size: 8px;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.bola-stat-grid strong {
+  margin-top: 4px;
+  color: #dce7f1;
+  font-size: 18px;
+}
+
+.bola-stat-pass {
+  border-color: #275e46 !important;
+  color: #72d8a5 !important;
+}
+
+.bola-stat-finding {
+  border-color: #74404a !important;
+  color: #ff909d !important;
+}
+
+.bola-stat-inconclusive {
+  border-color: #735c2f !important;
+  color: #e4bd72 !important;
+}
+
+.bola-findings-grid,
+.bola-results-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+  gap: 14px;
+}
+
+.bola-finding-card,
+.bola-result-card {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid #203e54;
+  border-radius: 12px;
+  background: #081725;
+}
+
+.bola-finding-card {
+  border-color: #74404a;
+}
+
+.bola-finding-card > header,
+.bola-result-card > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bola-finding-card header > div:first-child > span,
+.bola-result-title span {
+  color: #6e859b;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.bola-finding-card h6,
+.bola-result-card h6 {
+  margin: 5px 0 0;
+  font-size: 13px;
+}
+
+.bola-finding-card p,
+.bola-result-card p {
+  margin: 13px 0 0;
+  color: #879caf;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.bola-finding-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.bola-severity-high,
+.bola-severity-critical {
+  border: 1px solid #8a4550;
+  color: #ff919d;
+  background: #3a2027;
+}
+
+.bola-severity-medium {
+  border: 1px solid #735c2f;
+  color: #e4bd72;
+  background: #332a17;
+}
+
+.bola-severity-low,
+.bola-severity-info,
+.bola-confidence {
+  border: 1px solid #31566f;
+  color: #8ed2ec;
+  background: #102638;
+}
+
+.bola-finding-card dl,
+.bola-result-card dl {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+  gap: 9px;
+  margin: 15px 0 0;
+}
+
+.bola-finding-card dl div,
+.bola-result-card dl div {
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid #183247;
+  border-radius: 8px;
+  background: #091927;
+}
+
+.bola-finding-card dt,
+.bola-result-card dt {
+  color: #657c92;
+  font-size: 8px;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.bola-finding-card dd,
+.bola-result-card dd {
+  margin: 5px 0 0;
+  overflow-wrap: anywhere;
+  color: #c5d6e4;
+  font-size: 10px;
+}
+
+.bola-result-title {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bola-result-title > div:first-child {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid #29495f;
+  border-radius: 10px;
+  color: #69caef;
+  background: #102638;
+}
+
+.bola-result-card ul {
+  margin: 12px 0 0;
+  padding: 10px 10px 10px 27px;
+  border: 1px solid #735c2f;
+  border-radius: 8px;
+  color: #e4bd72;
+  background: #332a17;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1050px) {
+  .bola-stat-grid,
+  .bola-findings-grid,
+  .bola-results-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+@media (max-width: 720px) {
+  .bola-header,
+  .bola-details-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bola-stat-grid,
+  .bola-findings-grid,
+  .bola-results-grid,
+  .bola-finding-card dl,
+  .bola-result-card dl {
+    grid-template-columns: 1fr;
+  }
+
+  .bola-header .bola-button {
+    width: 100%;
+  }
+}

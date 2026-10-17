@@ -1,0 +1,237 @@
+openapi: 3.1.0
+
+info:
+  title: Invoice Demonstration API
+  version: 1.0.0
+  description: >
+    A demonstration invoice API used to test AccessMatrix
+    project creation and OpenAPI import.
+
+servers:
+  - url: http://127.0.0.1:9000
+    description: Local demonstration server
+
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Check API health
+      responses:
+        "200":
+          description: API is operational
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                properties:
+                  status:
+                    type: string
+
+  /invoices:
+    get:
+      operationId: listInvoices
+      summary: List invoices available to the current user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Invoice collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Invoice"
+
+  /invoices/{invoice_id}:
+    parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: Unique invoice identifier
+        schema:
+          type: string
+
+    get:
+      operationId: getInvoice
+      summary: Read one invoice
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Invoice returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+
+        "403":
+          description: Access denied
+
+        "404":
+          description: Invoice not found
+
+    patch:
+      operationId: updateInvoice
+      summary: Update an invoice
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceUpdate"
+      responses:
+        "200":
+          description: Invoice updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+
+        "403":
+          description: Access denied
+
+        "404":
+          description: Invoice not found
+
+    delete:
+      operationId: deleteInvoice
+      summary: Delete an invoice
+      security:
+        - bearerAuth: []
+      responses:
+        "204":
+          description: Invoice deleted
+
+        "403":
+          description: Access denied
+
+        "404":
+          description: Invoice not found
+
+  /admin/users:
+    get:
+      operationId: listUsers
+      summary: List application users
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+        "403":
+          description: Administrative access required
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Invoice:
+      type: object
+      required:
+        - id
+        - owner_id
+        - invoice_number
+        - amount
+        - status
+      properties:
+        id:
+          type: string
+          examples:
+            - INV-1001
+
+        owner_id:
+          type: string
+          examples:
+            - user-alice
+
+        invoice_number:
+          type: string
+          examples:
+            - "2026-1001"
+
+        amount:
+          type: number
+          format: double
+          minimum: 0
+          examples:
+            - 1250.5
+
+        status:
+          type: string
+          enum:
+            - draft
+            - approved
+            - paid
+
+        approved:
+          type: boolean
+          default: false
+
+        internal_margin:
+          type: number
+          format: double
+          description: >
+            Internal property that should not be exposed
+            to customer identities.
+
+        approval_notes:
+          type:
+            - string
+            - "null"
+          description: >
+            Internal approval information restricted
+            to authorized staff.
+
+    InvoiceUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+            - draft
+            - approved
+            - paid
+
+        approved:
+          type: boolean
+
+        approval_notes:
+          type:
+            - string
+            - "null"
+
+    User:
+      type: object
+      required:
+        - id
+        - username
+        - role
+      properties:
+        id:
+          type: string
+
+        username:
+          type: string
+
+        role:
+          type: string
+          enum:
+            - customer
+            - manager
+            - administrator

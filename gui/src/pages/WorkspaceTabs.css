@@ -1,0 +1,85 @@
+.workspace-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  padding: 7px;
+  border: 1px solid #1d384d;
+  border-radius: 13px;
+  background: #081725;
+}
+
+.workspace-tab {
+  min-height: 43px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #788da3;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 750;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease,
+    background 150ms ease;
+}
+
+.workspace-tab:hover {
+  color: #c5d4e2;
+  background: #0d2132;
+}
+
+.workspace-tab-active {
+  border-color: #31566f;
+  color: #d9e8f3;
+  background:
+    linear-gradient(
+      135deg,
+      #123149,
+      #102638
+    );
+}
+
+.workspace-tab-count {
+  min-width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+  padding: 0 6px;
+  border: 1px solid #35556d;
+  border-radius: 999px;
+  color: #9fb4c8;
+  background: #0a1b2a;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.workspace-tab-content {
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .workspace-tabs {
+    display: grid;
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+  .workspace-tab {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .workspace-tabs {
+    grid-template-columns: 1fr;
+  }
+}

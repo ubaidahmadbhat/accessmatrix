@@ -1,0 +1,376 @@
+openapi: 3.1.0
+
+info:
+  title: AccessMatrix Invoice Demonstration API
+  version: 1.0.0
+  description: >
+    Local-only API containing controlled authorization weaknesses
+    for AccessMatrix testing.
+
+servers:
+  - url: http://127.0.0.1:9000
+    description: Local demonstration service
+
+security:
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      operationId: demoHealth
+      summary: Check demonstration API health
+      tags:
+        - System
+      security: []
+      responses:
+        "200":
+          description: Demonstration API is available
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - service
+                properties:
+                  status:
+                    type: string
+                  service:
+                    type: string
+
+  /whoami:
+    get:
+      operationId: getCurrentIdentity
+      summary: Return the authenticated identity
+      tags:
+        - Authentication
+      responses:
+        "200":
+          description: Current identity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DemoIdentity"
+        "401":
+          description: Missing or invalid authentication
+
+  /invoices:
+    get:
+      operationId: listInvoices
+      summary: List visible invoices
+      tags:
+        - Invoices
+      responses:
+        "200":
+          description: Visible invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Invoice"
+        "401":
+          description: Missing or invalid authentication
+
+    post:
+      operationId: createInvoice
+      summary: Create an invoice
+      tags:
+        - Invoices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceCreate"
+      responses:
+        "201":
+          description: Invoice created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+        "401":
+          description: Missing or invalid authentication
+        "409":
+          description: Identity cannot create an invoice
+
+  /invoices/{invoice_id}:
+    parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: Invoice identifier
+        schema:
+          type: string
+
+    get:
+      operationId: getInvoice
+      summary: Read an invoice
+      description: >
+        Intentionally vulnerable local BOLA demonstration endpoint.
+      tags:
+        - Invoices
+      responses:
+        "200":
+          description: Invoice record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+        "401":
+          description: Missing or invalid authentication
+        "404":
+          description: Invoice not found
+
+    patch:
+      operationId: updateInvoice
+      summary: Update an invoice
+      tags:
+        - Invoices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceUpdate"
+      responses:
+        "200":
+          description: Updated invoice
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+        "401":
+          description: Missing or invalid authentication
+        "403":
+          description: Invoice ownership required
+        "404":
+          description: Invoice not found
+
+    delete:
+      operationId: deleteInvoice
+      summary: Delete an invoice
+      tags:
+        - Invoices
+      responses:
+        "204":
+          description: Invoice deleted
+        "401":
+          description: Missing or invalid authentication
+        "403":
+          description: Administrator role required
+        "404":
+          description: Invoice not found
+
+  /customers/{customer_id}/profile:
+    parameters:
+      - name: customer_id
+        in: path
+        required: true
+        description: Customer identifier
+        schema:
+          type: string
+
+    get:
+      operationId: getCustomerProfile
+      summary: Read a customer profile
+      description: >
+        Intentionally overexposes internal customer properties and
+        omits object ownership checks.
+      tags:
+        - Customers
+      responses:
+        "200":
+          description: Customer profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerProfile"
+        "401":
+          description: Missing or invalid authentication
+        "404":
+          description: Customer not found
+
+  /admin/reports:
+    get:
+      operationId: getAdminReport
+      summary: Read the administrative report
+      tags:
+        - Administration
+      responses:
+        "200":
+          description: Administrative report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminReport"
+        "401":
+          description: Missing or invalid authentication
+        "403":
+          description: Administrator role required
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    DemoIdentity:
+      type: object
+      required:
+        - user_id
+        - display_name
+        - role
+        - tenant_id
+      properties:
+        user_id:
+          type: string
+        display_name:
+          type: string
+        role:
+          type: string
+          enum:
+            - customer
+            - admin
+        tenant_id:
+          type: string
+
+    Invoice:
+      type: object
+      required:
+        - invoice_id
+        - owner_id
+        - tenant_id
+        - amount
+        - currency
+        - status
+        - description
+      properties:
+        invoice_id:
+          type: string
+        owner_id:
+          type: string
+        tenant_id:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+          enum:
+            - AED
+            - EUR
+            - USD
+        status:
+          type: string
+          enum:
+            - draft
+            - pending
+            - paid
+            - cancelled
+        description:
+          type: string
+
+    InvoiceCreate:
+      type: object
+      additionalProperties: false
+      required:
+        - amount
+        - description
+      properties:
+        amount:
+          type: number
+          exclusiveMinimum: 0
+          maximum: 1000000
+        currency:
+          type: string
+          default: USD
+          enum:
+            - AED
+            - EUR
+            - USD
+        description:
+          type: string
+          minLength: 1
+          maxLength: 500
+
+    InvoiceUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          type:
+            - number
+            - "null"
+          exclusiveMinimum: 0
+          maximum: 1000000
+        currency:
+          type:
+            - string
+            - "null"
+          enum:
+            - AED
+            - EUR
+            - USD
+            - null
+        status:
+          type:
+            - string
+            - "null"
+          enum:
+            - draft
+            - pending
+            - paid
+            - cancelled
+            - null
+        description:
+          type:
+            - string
+            - "null"
+          minLength: 1
+          maxLength: 500
+
+    CustomerProfile:
+      type: object
+      required:
+        - customer_id
+        - display_name
+        - tenant_id
+        - email
+        - credit_limit
+        - internal_risk_score
+        - internal_review_notes
+      properties:
+        customer_id:
+          type: string
+        display_name:
+          type: string
+        tenant_id:
+          type: string
+        email:
+          type: string
+          format: email
+        credit_limit:
+          type: number
+        internal_risk_score:
+          type: integer
+        internal_review_notes:
+          type: string
+
+    AdminReport:
+      type: object
+      required:
+        - customer_count
+        - invoice_count
+        - total_invoice_value
+        - pending_invoice_count
+      properties:
+        customer_count:
+          type: integer
+        invoice_count:
+          type: integer
+        total_invoice_value:
+          type: number
+        pending_invoice_count:
+          type: integer

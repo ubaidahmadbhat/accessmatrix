@@ -1,0 +1,75 @@
+﻿# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Python environments
+.venv/
+venv/
+env/
+
+# Python build output
+build/
+dist/
+*.egg-info/
+
+# Environment variables and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# AccessMatrix local/runtime data
+/.accessmatrix/
+/authorization-datasets/
+/audit-events/
+/bola-scans/
+/findings/
+/reports/
+/scan-results/
+/settings/
+/accessmatrix.db
+/*.sqlite
+/*.sqlite3
+
+# Node / frontend
+node_modules/
+gui/node_modules/
+gui/dist/
+gui/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Visual Studio Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# JetBrains
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary / backup files
+*.tmp
+*.log
+*.bak
+*.backup
+*~
+pyproject.toml.backup
